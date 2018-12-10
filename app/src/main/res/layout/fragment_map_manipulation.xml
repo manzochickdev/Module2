@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"></import>
+        <variable
+            name="viewHandle"
+            type="com.example.tuananh.module2.MapManipulation.ViewHandle"></variable>
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapView.MapManipulationFragment"
+        android:orientation="vertical"
+        android:background="@android:color/white">
+
+        <!-- TODO: Update blank fragment layout -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="MenuHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:visibility="@{viewHandle.search ? View.GONE : View.VISIBLE}"
+                android:onClick="@{()->viewHandle.onSearchMode()}"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:text="Search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:visibility="@{!viewHandle.search ? View.GONE : View.VISIBLE}"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:onClick="@{()->viewHandle.onModeChange(0)}"
+                    android:text="Search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:onClick="@{()->viewHandle.onModeChange(1)}"
+                    android:text="People"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:onClick="@{()->viewHandle.onModeChange(2)}"
+                    android:text="Current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:onClick="@{()->viewHandle.onModeChange(3)}"
+                    android:text="Pin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:onClick="@{()->viewHandle.onSearchMode()}"
+                    android:text="Cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+        <FrameLayout
+            android:id="@+id/frag_container"
+            android:visibility="@{!viewHandle.search ? View.GONE : View.VISIBLE}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+        <Button
+            android:onClick="@{()->viewHandle.onAddressBack()}"
+            android:text="OK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</layout>
