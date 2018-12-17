@@ -17,56 +17,66 @@
         <!-- TODO: Update blank fragment layout -->
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-            <TextView
-                android:layout_centerVertical="true"
-                android:text="MenuHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:visibility="@{viewHandle.search ? View.GONE : View.VISIBLE}"
-                android:onClick="@{()->viewHandle.onSearchMode()}"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:text="Search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent">
             <LinearLayout
-                android:visibility="@{!viewHandle.search ? View.GONE : View.VISIBLE}"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:id="@+id/layout_handle"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:weightSum="4">
                 <TextView
                     android:onClick="@{()->viewHandle.onModeChange(0)}"
-                    android:text="Search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@{viewHandle.mode==0 ? @android:color/white : @android:color/primary_text_dark}"
+                    android:textSize="24sp"
+                    setFont="@{viewHandle.context}"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=""/>
                 <TextView
+                    android:textColor="@{viewHandle.mode==1 ? @android:color/white : @android:color/primary_text_dark}"
                     android:onClick="@{()->viewHandle.onModeChange(1)}"
-                    android:text="People"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="24sp"
+                    setFont="@{viewHandle.context}"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=""/>
                 <TextView
+                    android:textColor="@{viewHandle.mode==2 ? @android:color/white : @android:color/primary_text_dark}"
                     android:onClick="@{()->viewHandle.onModeChange(2)}"
-                    android:text="Current"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="24sp"
+                    setFont="@{viewHandle.context}"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=""/>
                 <TextView
+                    android:textColor="@{viewHandle.mode==3 ? @android:color/white : @android:color/primary_text_dark}"
                     android:onClick="@{()->viewHandle.onModeChange(3)}"
-                    android:text="Pin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:onClick="@{()->viewHandle.onSearchMode()}"
-                    android:text="Cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textSize="24sp"
+                    setFont="@{viewHandle.context}"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text=""/>
             </LinearLayout>
+            <FrameLayout
+                android:id="@+id/frag_container"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@id/layout_handle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/curved_white"></FrameLayout>
         </RelativeLayout>
         <FrameLayout
-            android:id="@+id/frag_container"
+            android:id="@+id/frag_container1"
             android:visibility="@{!viewHandle.search ? View.GONE : View.VISIBLE}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

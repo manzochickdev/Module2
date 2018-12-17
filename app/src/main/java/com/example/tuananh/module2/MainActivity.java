@@ -1,12 +1,15 @@
 package com.example.tuananh.module2;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.tuananh.module2.Map.MapFragment;
 import com.example.tuananh.module2.MapManipulation.MapManipulationFragment;
 import com.example.tuananh.module2.Nearby.NearbyFragment;
+import com.example.tuananh.module2.databinding.LayoutTempBinding;
 import com.google.android.gms.maps.model.LatLng;
 
 public class MainActivity extends AppCompatActivity implements IModule2 {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements IModule2 {
         mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapManipulationFragment = (MapManipulationFragment) getSupportFragmentManager().findFragmentById(R.id.mapManipulationFragment);
         nearbyFragment = (NearbyFragment) getSupportFragmentManager().findFragmentById(R.id.nearbyFragment);
+
 
         mode = getIntent().getStringExtra("mode");
         mode="view";

@@ -23,6 +23,7 @@ public class PlaceSearchFragment extends Fragment {
         PlaceAutocompleteAdapter placeAutocompleteAdapter = new PlaceAutocompleteAdapter(getContext(),geoDataClient,null);
         AutoCompleteTextView textView = view.findViewById(R.id.et_search);
         textView.setAdapter(placeAutocompleteAdapter);
+        textView.setDropDownVerticalOffset(68);
         textView.setThreshold(3);
         return view;
     }

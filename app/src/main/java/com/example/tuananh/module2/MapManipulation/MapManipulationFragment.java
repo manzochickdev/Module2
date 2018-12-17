@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,8 @@ public class MapManipulationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentMapManipulationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_map_manipulation, container, false);
-        ViewHandle viewHandle = new ViewHandle(true,(IModule2) getContext());
+        ViewHandle viewHandle = new ViewHandle(true,getContext());
+        onModeHandle(0);
         fragmentMapManipulationBinding.setViewHandle(viewHandle);
         return fragmentMapManipulationBinding.getRoot();
 
@@ -50,6 +52,8 @@ public class MapManipulationFragment extends Fragment {
             textView = new TextView(getContext());
             textView.setText(address);
             textView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            textView.setPadding(4,4,4,4);
             frameLayout.addView(textView);
         }
     }

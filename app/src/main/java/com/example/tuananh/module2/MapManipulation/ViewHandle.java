@@ -1,5 +1,6 @@
 package com.example.tuananh.module2.MapManipulation;
 
+import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
@@ -9,11 +10,17 @@ import com.example.tuananh.module2.IModule2;
 public class ViewHandle extends BaseObservable {
     boolean isSearch;
     IModule2 iModule2;
-    int mode;
+    Context context;
+    int mode=0;
 
-    public ViewHandle(boolean isSearch, IModule2 iModule2) {
+    public ViewHandle(boolean isSearch, Context context) {
         this.isSearch = isSearch;
-        this.iModule2 = iModule2;
+        this.context = context;
+        this.iModule2 = (IModule2) context;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @Bindable
@@ -25,15 +32,6 @@ public class ViewHandle extends BaseObservable {
     public boolean isSearch() {
         return isSearch;
     }
-
-    public void setMode(int mode) {
-        this.mode = mode;
-    }
-
-    public void setSearch(boolean search) {
-        isSearch = search;
-    }
-
     public void onSearchMode(){
         this.isSearch = !this.isSearch;
         notifyPropertyChanged(BR.search);
