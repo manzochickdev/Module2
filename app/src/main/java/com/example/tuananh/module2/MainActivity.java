@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity implements IModule2 {
     MapFragment mapFragment;
     MapManipulationFragment mapManipulationFragment;
     NearbyFragment nearbyFragment;
+    String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,27 +23,24 @@ public class MainActivity extends AppCompatActivity implements IModule2 {
         mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapManipulationFragment = (MapManipulationFragment) getSupportFragmentManager().findFragmentById(R.id.mapManipulationFragment);
         nearbyFragment = (NearbyFragment) getSupportFragmentManager().findFragmentById(R.id.nearbyFragment);
+
+        mode = getIntent().getStringExtra("mode");
+        mode="view";
     }
 
     @Override
     public void onModeHandle(int mode) {
         mapManipulationFragment.onModeHandle(mode);
-    }
-
-    @Override
-    public void getCurrentLocation() {
-        mapFragment.getCurrentLocation();
-    }
-
-    @Override
-    public void getPinnedLocation() {
-        mapFragment.getPinnedLocation();
+        mapFragment.handleMode(mode);
     }
 
     @Override
     public void onAddressBack(String text, LatLng latLng) {
         Log.d("OK", "onAddressBack: "+text);
         mapManipulationFragment.onAddressBack(text,latLng);
+        if (mode.equals("view")){
+            nearbyFragment.onAddressBack(text,latLng);
+        }
     }
 
     @Override

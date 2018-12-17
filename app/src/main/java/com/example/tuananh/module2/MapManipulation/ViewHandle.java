@@ -41,16 +41,16 @@ public class ViewHandle extends BaseObservable {
 
     public void onModeChange(int mode){
         this.mode = mode;
-        switch (mode){
-            case 0:
-                break;
-            case 2:
-                iModule2.getCurrentLocation();
-                break;
-            case 3:
-                iModule2.getPinnedLocation();
-                break;
-        }
+//        switch (mode){
+//            case 0:
+//                break;
+//            case 2:
+//                iModule2.getCurrentLocation();
+//                break;
+//            case 3:
+//                iModule2.getPinnedLocation();
+//                break;
+//        }
         iModule2.onModeHandle(mode);
         notifyPropertyChanged(BR.mode);
 

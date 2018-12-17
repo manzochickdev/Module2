@@ -4,8 +4,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public interface IModule2 {
     void onModeHandle(int mode);
-    void getCurrentLocation();
-    void getPinnedLocation();
 
     void onAddressBack(String text, LatLng latLng);
 

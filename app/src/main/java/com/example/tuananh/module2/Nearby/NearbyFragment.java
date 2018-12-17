@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.tuananh.module2.Model;
 import com.example.tuananh.module2.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -34,5 +35,9 @@ public class NearbyFragment extends Fragment {
     void getListModel(){
         //todo : get list model here
         models = new ArrayList<>();
+    }
+
+    public void onAddressBack(String text, LatLng latLng){
+
     }
 }

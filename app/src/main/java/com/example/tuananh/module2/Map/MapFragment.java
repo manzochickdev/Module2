@@ -92,27 +92,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    public void getPinnedLocation() {
-        final Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-        googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
-                int x = fragmentMapBinding.getRoot().getWidth() / 2;
-                int y = fragmentMapBinding.getRoot().getHeight() / 2;
-                LatLng position = googleMap.getProjection().fromScreenLocation(new Point(x, y));
-                String s = "";
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(position.latitude,position.longitude,1);
-                    if (addresses.size()!=0){
-                        s = addresses.get(0).getAddressLine(0);
+    public void getPinnedLocation(int mode) {
+        if(mode==3){
+            final Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+            googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                @Override
+                public void onCameraIdle() {
+                    int x = fragmentMapBinding.getRoot().getWidth() / 2;
+                    int y = fragmentMapBinding.getRoot().getHeight() / 2;
+                    LatLng position = googleMap.getProjection().fromScreenLocation(new Point(x, y));
+                    String s = "";
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(position.latitude,position.longitude,1);
+                        if (addresses.size()!=0){
+                            s = addresses.get(0).getAddressLine(0);
+                        }
+
+                        iModule2.onAddressBack(s,position);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-
-                    iModule2.onAddressBack(s,position);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
+        else googleMap.setOnCameraIdleListener(null);
+    }
+
+    public void handleMode(int mode){
+        getPinnedLocation(mode);
+        if (mode==2){
+            getCurrentLocation();
+        }
     }
 }
