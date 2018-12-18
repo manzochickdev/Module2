@@ -20,13 +20,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/mapManipulationFragment"></fragment>
-        <fragment
+        <FrameLayout
+            android:id="@+id/bottom_container"
             android:layout_marginBottom="20dp"
             android:layout_gravity="bottom"
-            android:name="com.example.tuananh.module2.Nearby.NearbyFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/nearbyFragment"></fragment>
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_ok"
+                android:textColor="@android:color/white"
+                android:text="OK"
+                android:layout_margin="8dp"
+                android:background="@drawable/curved_accent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
     </FrameLayout>
 
 </FrameLayout>

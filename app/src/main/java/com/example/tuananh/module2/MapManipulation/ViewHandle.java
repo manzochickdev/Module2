@@ -54,8 +54,5 @@ public class ViewHandle extends BaseObservable {
 
     }
 
-    public void onAddressBack(){
-        iModule2.onDataBack();
-    }
 
 }

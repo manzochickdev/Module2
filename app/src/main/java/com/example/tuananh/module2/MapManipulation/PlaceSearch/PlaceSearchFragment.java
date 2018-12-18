@@ -4,11 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 
+import com.example.tuananh.module2.IModule2;
 import com.example.tuananh.module2.R;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
@@ -19,11 +22,20 @@ public class PlaceSearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_place_search, container, false);
-        GeoDataClient geoDataClient = Places.getGeoDataClient(getContext(), null);
-        PlaceAutocompleteAdapter placeAutocompleteAdapter = new PlaceAutocompleteAdapter(getContext(),geoDataClient,null);
-        AutoCompleteTextView textView = view.findViewById(R.id.et_search);
+        Context context = getContext();
+        final IModule2 iModule2 = (IModule2) context;
+        GeoDataClient geoDataClient = Places.getGeoDataClient(context, null);
+        PlaceAutocompleteAdapter placeAutocompleteAdapter = new PlaceAutocompleteAdapter(context,geoDataClient,null);
+        final AutoCompleteTextView textView = view.findViewById(R.id.et_search);
         textView.setAdapter(placeAutocompleteAdapter);
-        textView.setDropDownVerticalOffset(68);
+        textView.setDropDownVerticalOffset(20);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String data = textView.getText().toString();
+                iModule2.moveCamera(data);
+            }
+        });
         textView.setThreshold(3);
         return view;
     }

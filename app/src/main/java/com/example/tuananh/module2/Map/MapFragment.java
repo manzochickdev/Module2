@@ -9,6 +9,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -27,12 +28,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -57,7 +60,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     void moveCamera(LatLng latLng){
-        googleMap.addMarker(new MarkerOptions().position(latLng));
+        Marker marker = googleMap.addMarker(new MarkerOptions().position(latLng));
+        googleMap.setInfoWindowAdapter(new CustomInfoWindow(getContext(),null));
+        marker.showInfoWindow();
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
     }
 
@@ -77,16 +82,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onSuccess(Location location) {
                 LatLng currentLocation = new LatLng(location.getLatitude(),location.getLongitude());
+                String data="";
                 moveCamera(currentLocation);
                 Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                 try {
                     List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
                     if (addresses.size()!=0){
-                        String data = addresses.get(0).getAddressLine(0);
-                        iModule2.onAddressBack(data,currentLocation);
+                        data = addresses.get(0).getAddressLine(0);
                     }
+                    else data = currentLocation.latitude+","+currentLocation.longitude;
                 } catch (IOException e) {
+                    data = currentLocation.latitude+","+currentLocation.longitude;
                     e.printStackTrace();
+                }
+                finally {
+                    iModule2.onAddressBack(data,currentLocation);
                 }
             }
         });
@@ -107,11 +117,17 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                         if (addresses.size()!=0){
                             s = addresses.get(0).getAddressLine(0);
                         }
+                        else {
+                            s = position.latitude+","+position.longitude;
+                        }
 
-                        iModule2.onAddressBack(s,position);
 
                     } catch (IOException e) {
+                        s = position.latitude+","+position.longitude;
                         e.printStackTrace();
+                    }
+                    finally {
+                        iModule2.onAddressBack(s,position);
                     }
                 }
             });
@@ -119,10 +135,53 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         else googleMap.setOnCameraIdleListener(null);
     }
 
+    public void moveCameraByAddress(String address){
+        FetchAddress fetchAddress = new FetchAddress(getContext());
+        try {
+            LatLng latLng = fetchAddress.execute(address).get();
+            googleMap.addMarker(new MarkerOptions().position(latLng).title(address));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void handleMode(int mode){
         getPinnedLocation(mode);
         if (mode==2){
             getCurrentLocation();
+        }
+    }
+
+    private class FetchAddress extends AsyncTask<String,Void,LatLng> {
+        Context mContext;
+
+        public FetchAddress(Context mContext) {
+            this.mContext = mContext;
+        }
+
+        @Override
+        protected LatLng doInBackground(String... strings) {
+            Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+            LatLng latLng = null;
+            try {
+                List<Address> addresses = geocoder.getFromLocationName(strings[0],1);
+                double lat = addresses.get(0).getLatitude();
+                double lng = addresses.get(0).getLongitude();
+                latLng = new LatLng(lat,lng);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return latLng;
+        }
+
+        @Override
+        protected void onPostExecute(LatLng latLng) {
+            super.onPostExecute(latLng);
         }
     }
 }
