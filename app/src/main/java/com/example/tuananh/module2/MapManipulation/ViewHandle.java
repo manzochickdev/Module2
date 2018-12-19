@@ -13,10 +13,10 @@ public class ViewHandle extends BaseObservable {
     Context context;
     int mode=0;
 
-    public ViewHandle(boolean isSearch, Context context) {
+    public ViewHandle(boolean isSearch, Context context,IModule2 iModule2) {
         this.isSearch = isSearch;
         this.context = context;
-        this.iModule2 = (IModule2) context;
+        this.iModule2 = iModule2;
     }
 
     public Context getContext() {

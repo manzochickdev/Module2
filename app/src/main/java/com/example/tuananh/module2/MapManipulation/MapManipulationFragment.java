@@ -30,7 +30,7 @@ public class MapManipulationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentMapManipulationBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_map_manipulation, container, false);
-        ViewHandle viewHandle = new ViewHandle(true,getContext());
+        ViewHandle viewHandle = new ViewHandle(true,getContext(),(IModule2)getParentFragment());
         onModeHandle(0);
         fragmentMapManipulationBinding.setViewHandle(viewHandle);
         return fragmentMapManipulationBinding.getRoot();

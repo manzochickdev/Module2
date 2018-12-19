@@ -47,7 +47,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         fragmentMapBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false);
-        iModule2 = (IModule2) getContext();
+        iModule2 = (IModule2) getParentFragment();
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         return fragmentMapBinding.getRoot();

@@ -23,7 +23,7 @@ public class PlaceSearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_place_search, container, false);
         Context context = getContext();
-        final IModule2 iModule2 = (IModule2) context;
+        final IModule2 iModule2 = (IModule2) getParentFragment().getParentFragment();
         GeoDataClient geoDataClient = Places.getGeoDataClient(context, null);
         PlaceAutocompleteAdapter placeAutocompleteAdapter = new PlaceAutocompleteAdapter(context,geoDataClient,null);
         final AutoCompleteTextView textView = view.findViewById(R.id.et_search);
